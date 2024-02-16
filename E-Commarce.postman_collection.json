@@ -1,0 +1,675 @@
+{
+	"info": {
+		"_postman_id": "c36764c8-d324-4cad-b534-6679c7097d1a",
+		"name": "E-Commarce",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "31248560"
+	},
+	"item": [
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "sign up",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\r\n\"username\":\"Ali\",\r\n        \"email\":\"bbsskktt77@gmail.com\",\r\n        \"password\":\"123456789\",\r\n        \"age\":\"40\",\r\n        \"role\":\"Admin\",\r\n        \"phoneNumbers\":[\"01141112844\",\"01141112855\"],\r\n        \"addresses\":[\"giza\",\"helwan\"]\r\n\r\n\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/auth/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"auth",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "verifyEmail",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "signIn",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "a",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImtoYWxlZGFsaTdnQGdtYWlsLmNvbSIsImlkIjoiNjViODg5NDFmOWNiMjdhYzRkMDQ4MWUzIiwibG9nZ2VkSW4iOnRydWUsImlhdCI6MTcwNzYwOTEyOSwiZXhwIjoxNzA3Njk1NTI5fQ.wNGEC2D1Ou2o2cBn_LkooG-vwmI3QW-e2ifdid1JTUg",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n \"email\":\"bbsskktt77@gmail.com\",\r\n        \"password\":\"123456789\"\r\n\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/auth/signin",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"auth",
+								"signin"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update profile",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "accesstoken",
+								"value": "accesstoken_eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImJic3Nra3R0NzdAZ21haWwuY29tIiwiaWQiOiI2NWJkYTlkYjcwNTRkNTUyODIzZTgwNTIiLCJsb2dnZWRJbiI6dHJ1ZSwiaWF0IjoxNzA3Njg4NjMzLCJleHAiOjE3MDc3NzUwMzN9.ApFcnhqBTKHaQdn03rVADdiDvosaOiOxa8Il2wklLgw",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\r\n\"username\":\"ali\",\r\n\"email\":\"ali@gmail.com\",\r\n\"oldPassword\":\"123456789\",\r\n\"password\":\"11111111\",\r\n\"age\":\"22\",\r\n\"phoneNumbers\":[\"01141112842\",\"01141112845\"],\r\n\"addresses\":[\"mayo\"]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/user/updateProfile",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"user",
+								"updateProfile"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete Profile",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "accesstoken",
+								"value": "accesstoken_eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFsaUBnbWFpbC5jb20iLCJpZCI6IjY1YmRhOWRiNzA1NGQ1NTI4MjNlODA1MiIsImxvZ2dlZEluIjp0cnVlLCJpYXQiOjE3MDc2OTcyNjUsImV4cCI6MTcwNzc4MzY2NX0.SUqzy8rbK7yjRUEYV8jLqcqfo5hgSiPFnd-ElduuOPo",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3000/user/deleteProfile",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"user",
+								"deleteProfile"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get userProfile",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "accesstoken",
+								"value": "accesstoken_eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImtoYWxlZGFsaTdnQGdtYWlsLmNvbSIsImlkIjoiNjViODg5NDFmOWNiMjdhYzRkMDQ4MWUzIiwibG9nZ2VkSW4iOnRydWUsImlhdCI6MTcwNzY5NzkwMCwiZXhwIjoxNzA3Nzg0MzAwfQ.2woEzMXJEsDOBvvl1-uSn6IFHG77zGmNTAlXYB8XK3Y",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3000/user/getProfileData/65b88941f9cb27ac4d0481e3",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"user",
+								"getProfileData",
+								"65b88941f9cb27ac4d0481e3"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Category",
+			"item": [
+				{
+					"name": "addCategory",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "accesstoken",
+								"value": "accesstoken_eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImJic3Nra3R0NzdAZ21haWwuY29tIiwiaWQiOiI2NWJkYTlkYjcwNTRkNTUyODIzZTgwNTIiLCJsb2dnZWRJbiI6dHJ1ZSwiaWF0IjoxNzA3NjA5NDA3LCJleHAiOjE3MDc2OTU4MDd9.TY6hKgvHlSF0FA24MzGqneZXRW89zBvbwQ32yZtCDDk",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "apple phone",
+									"type": "text"
+								},
+								{
+									"key": "image",
+									"type": "file",
+									"src": "/C:/Users/ACER/Pictures/many-different-berries-form-frame-white-background_485709-54.jpg"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:3000/category",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"category"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update category",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "accesstoken",
+								"value": "accesstoken_eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImtoYWxlZGFsaTdnQGdtYWlsLmNvbSIsImlkIjoiNjViODg5NDFmOWNiMjdhYzRkMDQ4MWUzIiwibG9nZ2VkSW4iOnRydWUsImlhdCI6MTcwNzY5OTEyOCwiZXhwIjoxNzA3Nzg1NTI4fQ.ATVOvR26PsyuNL6PJ3AnWVGj3f4I9Rgvvoq_ZEyTZZs",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "smart phones",
+									"type": "text"
+								},
+								{
+									"key": "image",
+									"type": "file",
+									"src": "/C:/Users/ACER/Pictures/closeup-shot-fresh-ripe-strawberries-isolated-white-surface_181624-54939.jpg"
+								},
+								{
+									"key": "oldPublicId",
+									"value": "E-Commerce/Categories/1agga/c9bbnx8dzgkyfvayhmtp",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:3000/category/65c80d59570c7df2bf1a04ce",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"category",
+								"65c80d59570c7df2bf1a04ce"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get all category",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/category",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"category"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete categoty",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "accesstoken",
+								"value": "accesstoken_eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImtoYWxlZGFsaTdnQGdtYWlsLmNvbSIsImlkIjoiNjViODg5NDFmOWNiMjdhYzRkMDQ4MWUzIiwibG9nZ2VkSW4iOnRydWUsImlhdCI6MTcwNzYwOTEyOSwiZXhwIjoxNzA3Njk1NTI5fQ.wNGEC2D1Ou2o2cBn_LkooG-vwmI3QW-e2ifdid1JTUg",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3000/category/65bdaa939e2d50f0ef29a90d",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"category",
+								"65bdaa939e2d50f0ef29a90d"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "sub-category",
+			"item": [
+				{
+					"name": "add sub category",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "accesstoken",
+								"value": "accesstoken_eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImtoYWxlZGFsaTdnQGdtYWlsLmNvbSIsImlkIjoiNjViODg5NDFmOWNiMjdhYzRkMDQ4MWUzIiwibG9nZ2VkSW4iOnRydWUsImlhdCI6MTcwNzgwMTE4NSwiZXhwIjoxNzA3ODg3NTg1fQ.8dU0oMfc7vN7ncqKYbXhsd5aF_G_akX_oXVQWc_A1_E",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "phone case",
+									"type": "text"
+								},
+								{
+									"key": "image",
+									"type": "file",
+									"src": "/C:/Users/ACER/Pictures/closeup-shot-fresh-ripe-strawberries-isolated-white-surface_181624-54939.jpg"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:3000/subcategory/65c80d59570c7df2bf1a04ce",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"subcategory",
+								"65c80d59570c7df2bf1a04ce"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update subCategory",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "accesstoken",
+								"value": "accesstoken_eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImtoYWxlZGFsaTdnQGdtYWlsLmNvbSIsImlkIjoiNjViODg5NDFmOWNiMjdhYzRkMDQ4MWUzIiwibG9nZ2VkSW4iOnRydWUsImlhdCI6MTcwNzcwMDIyNywiZXhwIjoxNzA3Nzg2NjI3fQ.VQoipC9UPCZKZQQ_mgSGMBt_Ni1pM7Bgb9kywy8PdxM",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "mobile case",
+									"type": "text"
+								},
+								{
+									"key": "image",
+									"type": "file",
+									"src": "/C:/Users/ACER/Pictures/c9d59b7d-466c-41c5-84a3-1bc7fbb399ab.jpg"
+								},
+								{
+									"key": "oldPublicId",
+									"value": "E-Commerce/Categories/1agga/subCategory/dgs3g/k0oiveffdk7dl4ms1ihm",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:3000/subcategory/65c9757b8135fe600c395ccb",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"subcategory",
+								"65c9757b8135fe600c395ccb"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete subCategory",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "accesstoken",
+								"value": "accesstoken_eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImJic3Nra3R0NzdAZ21haWwuY29tIiwiaWQiOiI2NWNhZjdkNTQzZTY3NDUwNGExNzlkZjkiLCJsb2dnZWRJbiI6dHJ1ZSwiaWF0IjoxNzA3ODAwNTc3LCJleHAiOjE3MDc4ODY5Nzd9.qtqEe7pmyjkaG31j3hCWZCzv944VbhKuqtc3t93LXKs",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3000/subcategory/65cafa79c067539cf97b62c6",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"subcategory",
+								"65cafa79c067539cf97b62c6"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get all subcategory",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/subcategory/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"subcategory",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Brand",
+			"item": [
+				{
+					"name": "add brand",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "accesstoken",
+								"value": "accesstoken_eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImJic3Nra3R0NzdAZ21haWwuY29tIiwiaWQiOiI2NWNhZjdkNTQzZTY3NDUwNGExNzlkZjkiLCJsb2dnZWRJbiI6dHJ1ZSwiaWF0IjoxNzA3ODAwNTc3LCJleHAiOjE3MDc4ODY5Nzd9.qtqEe7pmyjkaG31j3hCWZCzv944VbhKuqtc3t93LXKs",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "big samsung",
+									"type": "text"
+								},
+								{
+									"key": "image",
+									"type": "file",
+									"src": "/C:/Users/ACER/Pictures/WhatsApp Image 2023-07-31 at 9.53.35 PM.jpeg"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:3000/brand/?subCategoryId=65cafb3d8d130f59a7f4d050&categoryId=65c80d59570c7df2bf1a04ce",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"brand",
+								""
+							],
+							"query": [
+								{
+									"key": "subCategoryId",
+									"value": "65cafb3d8d130f59a7f4d050"
+								},
+								{
+									"key": "categoryId",
+									"value": "65c80d59570c7df2bf1a04ce"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update brand",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "accesstoken",
+								"value": "accesstoken_eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImJic3Nra3R0NzdAZ21haWwuY29tIiwiaWQiOiI2NWNhZjdkNTQzZTY3NDUwNGExNzlkZjkiLCJsb2dnZWRJbiI6dHJ1ZSwiaWF0IjoxNzA3ODAzMTAzLCJleHAiOjE3MDc4ODk1MDN9.kv5SeOJ76kXZz4nn91xZHAkTWXcJjxUFn7fYSrYuegE",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "big samsungh",
+									"type": "text"
+								},
+								{
+									"key": "image",
+									"type": "file",
+									"src": "/C:/Users/ACER/Pictures/many-different-berries-form-frame-white-background_485709-54.jpg"
+								},
+								{
+									"key": "oldPublicId",
+									"value": "E-Commerce/Categories/1agga/subCategory/h5sdh/brand sd5f4/vcyihwdm1e7txgmzzpbf",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "update brand",
+							"host": [
+								"update brand"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "New Request",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "accesstoken",
+								"value": "accesstoken_eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImJic3Nra3R0NzdAZ21haWwuY29tIiwiaWQiOiI2NWNhZjdkNTQzZTY3NDUwNGExNzlkZjkiLCJsb2dnZWRJbiI6dHJ1ZSwiaWF0IjoxNzA4MDQyMzEyLCJleHAiOjE3MDgxMjg3MTJ9.GF0xT2dzCKaILPKX8_ZXg_-FGlvJtn5d4xvGRobbKd4",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3000/brand/65ceab1b8b13ab384f96d043",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"brand",
+								"65ceab1b8b13ab384f96d043"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "gat all brand",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/brand/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"brand",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Product",
+			"item": [
+				{
+					"name": "add product",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "accesstoken",
+								"value": "accesstoken_eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImtoYWxlZGFsaTdnQGdtYWlsLmNvbSIsImlkIjoiNjViODg5NDFmOWNiMjdhYzRkMDQ4MWUzIiwibG9nZ2VkSW4iOnRydWUsImlhdCI6MTcwNzYyNDkyNiwiZXhwIjoxNzA3NzExMzI2fQ.McXIpBSAE7k0rzZ9AH35RI0UgCToDcWBA6SFj05vSyA",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "title",
+									"value": "case",
+									"type": "text"
+								},
+								{
+									"key": "desc",
+									"value": "good",
+									"type": "text"
+								},
+								{
+									"key": "stock",
+									"value": "70",
+									"type": "text"
+								},
+								{
+									"key": "basePrice",
+									"value": "10000",
+									"type": "text"
+								},
+								{
+									"key": "discount",
+									"value": "10",
+									"type": "text"
+								},
+								{
+									"key": "specs",
+									"value": "{\"colors\" :[\"red\"], \"sizes\": [123]}",
+									"type": "text"
+								},
+								{
+									"key": "image",
+									"type": "file",
+									"src": "/C:/Users/ACER/Pictures/closeup-shot-fresh-ripe-strawberries-isolated-white-surface_181624-54939.jpg"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:3000/product?subCategoryId=65c80e8ada147b466aa3cbc7&categoryId=65c80d59570c7df2bf1a04ce&brandId=65c80ee0da147b466aa3cbd2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"product"
+							],
+							"query": [
+								{
+									"key": "subCategoryId",
+									"value": "65c80e8ada147b466aa3cbc7"
+								},
+								{
+									"key": "categoryId",
+									"value": "65c80d59570c7df2bf1a04ce"
+								},
+								{
+									"key": "brandId",
+									"value": "65c80ee0da147b466aa3cbd2"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
