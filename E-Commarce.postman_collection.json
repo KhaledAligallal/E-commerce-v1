@@ -59,7 +59,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n \"email\":\"bbsskktt77@gmail.com\",\r\n        \"password\":\"123456789\"\r\n\r\n}",
+							"raw": "{\r\n \"email\":\"khaledali7g@gmail.com\",\r\n        \"password\":\"123456789\"\r\n\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -317,7 +317,7 @@
 						"header": [
 							{
 								"key": "accesstoken",
-								"value": "accesstoken_eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImtoYWxlZGFsaTdnQGdtYWlsLmNvbSIsImlkIjoiNjViODg5NDFmOWNiMjdhYzRkMDQ4MWUzIiwibG9nZ2VkSW4iOnRydWUsImlhdCI6MTcwNzgwMTE4NSwiZXhwIjoxNzA3ODg3NTg1fQ.8dU0oMfc7vN7ncqKYbXhsd5aF_G_akX_oXVQWc_A1_E",
+								"value": "accesstoken_eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImtoYWxlZGFsaTdnQGdtYWlsLmNvbSIsImlkIjoiNjViODg5NDFmOWNiMjdhYzRkMDQ4MWUzIiwibG9nZ2VkSW4iOnRydWUsImlhdCI6MTcwODY5MTM2MCwiZXhwIjoxNzA4Nzc3NzYwfQ.YcZ0b_0OZYjOi_vBobuMNr8It9nz7jdjs3U2qb1akts",
 								"type": "text"
 							}
 						],
@@ -326,13 +326,13 @@
 							"formdata": [
 								{
 									"key": "name",
-									"value": "phone case",
+									"value": "samsung case",
 									"type": "text"
 								},
 								{
 									"key": "image",
 									"type": "file",
-									"src": "/C:/Users/ACER/Pictures/closeup-shot-fresh-ripe-strawberries-isolated-white-surface_181624-54939.jpg"
+									"src": "/C:/Users/ACER/Pictures/many-different-berries-form-frame-white-background_485709-54.jpg"
 								}
 							]
 						},
@@ -455,7 +455,7 @@
 						"header": [
 							{
 								"key": "accesstoken",
-								"value": "accesstoken_eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImJic3Nra3R0NzdAZ21haWwuY29tIiwiaWQiOiI2NWNhZjdkNTQzZTY3NDUwNGExNzlkZjkiLCJsb2dnZWRJbiI6dHJ1ZSwiaWF0IjoxNzA3ODAwNTc3LCJleHAiOjE3MDc4ODY5Nzd9.qtqEe7pmyjkaG31j3hCWZCzv944VbhKuqtc3t93LXKs",
+								"value": "accesstoken_eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImJic3Nra3R0NzdAZ21haWwuY29tIiwiaWQiOiI2NWNhZjdkNTQzZTY3NDUwNGExNzlkZjkiLCJsb2dnZWRJbiI6dHJ1ZSwiaWF0IjoxNzA4NjkxMjc2LCJleHAiOjE3MDg3Nzc2NzZ9.M9eHCtyGl5geEj1rLOB46Bu1bPdZQePN1WkR7-8xPss",
 								"type": "text"
 							}
 						],
@@ -464,18 +464,18 @@
 							"formdata": [
 								{
 									"key": "name",
-									"value": "big samsung",
+									"value": "big samssss",
 									"type": "text"
 								},
 								{
 									"key": "image",
 									"type": "file",
-									"src": "/C:/Users/ACER/Pictures/WhatsApp Image 2023-07-31 at 9.53.35 PM.jpeg"
+									"src": "/C:/Users/ACER/Pictures/closeup-shot-fresh-ripe-strawberries-isolated-white-surface_181624-54939.jpg"
 								}
 							]
 						},
 						"url": {
-							"raw": "http://localhost:3000/brand/?subCategoryId=65cafb3d8d130f59a7f4d050&categoryId=65c80d59570c7df2bf1a04ce",
+							"raw": "http://localhost:3000/brand/?subCategoryId=65d8907038c3a188ccd96be5&categoryId=65c80d59570c7df2bf1a04ce",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -488,7 +488,7 @@
 							"query": [
 								{
 									"key": "subCategoryId",
-									"value": "65cafb3d8d130f59a7f4d050"
+									"value": "65d8907038c3a188ccd96be5"
 								},
 								{
 									"key": "categoryId",
@@ -597,7 +597,7 @@
 						"header": [
 							{
 								"key": "accesstoken",
-								"value": "accesstoken_eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImtoYWxlZGFsaTdnQGdtYWlsLmNvbSIsImlkIjoiNjViODg5NDFmOWNiMjdhYzRkMDQ4MWUzIiwibG9nZ2VkSW4iOnRydWUsImlhdCI6MTcwNzYyNDkyNiwiZXhwIjoxNzA3NzExMzI2fQ.McXIpBSAE7k0rzZ9AH35RI0UgCToDcWBA6SFj05vSyA",
+								"value": "accesstoken_eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImJic3Nra3R0NzdAZ21haWwuY29tIiwiaWQiOiI2NWNhZjdkNTQzZTY3NDUwNGExNzlkZjkiLCJsb2dnZWRJbiI6dHJ1ZSwiaWF0IjoxNzA4Njg5MDI0LCJleHAiOjE3MDg3NzU0MjR9.mISC-F0mipuaHjUS2egIi7iknHZ-W1NVfdB4MvLavyY",
 								"type": "text"
 							}
 						],
@@ -606,22 +606,22 @@
 							"formdata": [
 								{
 									"key": "title",
-									"value": "case",
+									"value": "test4",
 									"type": "text"
 								},
 								{
 									"key": "desc",
-									"value": "good",
+									"value": "verey good",
 									"type": "text"
 								},
 								{
 									"key": "stock",
-									"value": "70",
+									"value": "90",
 									"type": "text"
 								},
 								{
 									"key": "basePrice",
-									"value": "10000",
+									"value": "100",
 									"type": "text"
 								},
 								{
@@ -642,7 +642,7 @@
 							]
 						},
 						"url": {
-							"raw": "http://localhost:3000/product?subCategoryId=65c80e8ada147b466aa3cbc7&categoryId=65c80d59570c7df2bf1a04ce&brandId=65c80ee0da147b466aa3cbd2",
+							"raw": "http://localhost:3000/product?subCategoryId=65d8907038c3a188ccd96be5&categoryId=65c80d59570c7df2bf1a04ce&brandId=65d8909138c3a188ccd96bf1",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -654,7 +654,7 @@
 							"query": [
 								{
 									"key": "subCategoryId",
-									"value": "65c80e8ada147b466aa3cbc7"
+									"value": "65d8907038c3a188ccd96be5"
 								},
 								{
 									"key": "categoryId",
@@ -662,8 +662,313 @@
 								},
 								{
 									"key": "brandId",
-									"value": "65c80ee0da147b466aa3cbd2"
+									"value": "65d8909138c3a188ccd96bf1"
 								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get All Products With Pagination",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "accesstoken",
+								"value": "accesstoken_eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImtoYWxlZGFsaTdnQGdtYWlsLmNvbSIsImlkIjoiNjViODg5NDFmOWNiMjdhYzRkMDQ4MWUzIiwibG9nZ2VkSW4iOnRydWUsImlhdCI6MTcwODY5NzczOCwiZXhwIjoxNzA4Nzg0MTM4fQ.D7kHY4p8H-Z_VE2dHj8C2vIRWY3S75PtafXc438cYCQ",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3000/product/getall?size=5&page=1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"product",
+								"getall"
+							],
+							"query": [
+								{
+									"key": "size",
+									"value": "5"
+								},
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "sort",
+									"value": "stock asc",
+									"disabled": true
+								},
+								{
+									"key": "title",
+									"value": "m",
+									"disabled": true
+								},
+								{
+									"key": "desc",
+									"value": "VEREY GOOD",
+									"disabled": true
+								},
+								{
+									"key": "discount",
+									"value": "TRUE",
+									"disabled": true
+								},
+								{
+									"key": "priceFrom",
+									"value": "50",
+									"disabled": true
+								},
+								{
+									"key": "priceTo",
+									"value": "60",
+									"disabled": true
+								},
+								{
+									"key": "stock[ne]",
+									"value": "70",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getByField",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "accesstoken",
+								"value": "accesstoken_eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImtoYWxlZGFsaTdnQGdtYWlsLmNvbSIsImlkIjoiNjViODg5NDFmOWNiMjdhYzRkMDQ4MWUzIiwibG9nZ2VkSW4iOnRydWUsImlhdCI6MTcwODY5NzczOCwiZXhwIjoxNzA4Nzg0MTM4fQ.D7kHY4p8H-Z_VE2dHj8C2vIRWY3S75PtafXc438cYCQ",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3000/product/getByField/?title=t",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"product",
+								"getByField",
+								""
+							],
+							"query": [
+								{
+									"key": "sort",
+									"value": "stock asc",
+									"disabled": true
+								},
+								{
+									"key": "desc",
+									"value": "VEREY GOOD",
+									"disabled": true
+								},
+								{
+									"key": "discount",
+									"value": "TRUE",
+									"disabled": true
+								},
+								{
+									"key": "priceFrom",
+									"value": "50",
+									"disabled": true
+								},
+								{
+									"key": "priceTo",
+									"value": "60",
+									"disabled": true
+								},
+								{
+									"key": "stock[ne]",
+									"value": "70",
+									"disabled": true
+								},
+								{
+									"key": "title",
+									"value": "t"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "all Products For Specific Brands",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "accesstoken",
+								"value": "accesstoken_eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImtoYWxlZGFsaTdnQGdtYWlsLmNvbSIsImlkIjoiNjViODg5NDFmOWNiMjdhYzRkMDQ4MWUzIiwibG9nZ2VkSW4iOnRydWUsImlhdCI6MTcwODY5NzczOCwiZXhwIjoxNzA4Nzg0MTM4fQ.D7kHY4p8H-Z_VE2dHj8C2vIRWY3S75PtafXc438cYCQ",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3000/product/SpecificBrands/?brandId[in]=65ceab62e61233cec454c67e&brandId[in]=65d88ff5c1d7937a280cfab2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"product",
+								"SpecificBrands",
+								""
+							],
+							"query": [
+								{
+									"key": "sort",
+									"value": "stock asc",
+									"disabled": true
+								},
+								{
+									"key": "desc",
+									"value": "VEREY GOOD",
+									"disabled": true
+								},
+								{
+									"key": "discount",
+									"value": "TRUE",
+									"disabled": true
+								},
+								{
+									"key": "priceFrom",
+									"value": "50",
+									"disabled": true
+								},
+								{
+									"key": "priceTo",
+									"value": "60",
+									"disabled": true
+								},
+								{
+									"key": "stock[ne]",
+									"value": "70",
+									"disabled": true
+								},
+								{
+									"key": "title",
+									"value": "t",
+									"disabled": true
+								},
+								{
+									"key": "brandId[in]",
+									"value": "65ceab62e61233cec454c67e"
+								},
+								{
+									"key": "brandId[in]",
+									"value": "65d88ff5c1d7937a280cfab2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get specific product",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "accesstoken",
+								"value": "accesstoken_eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImJic3Nra3R0NzdAZ21haWwuY29tIiwiaWQiOiI2NWNhZjdkNTQzZTY3NDUwNGExNzlkZjkiLCJsb2dnZWRJbiI6dHJ1ZSwiaWF0IjoxNzA4NTc1NzU2LCJleHAiOjE3MDg2NjIxNTZ9.bGpFNwpceDw2kLqwUzOr4krwYvZYM0I6SyZ3tq2_3Fs",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3000/product/65ceab7ce61233cec454c682",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"product",
+								"65ceab7ce61233cec454c682"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete product",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "accesstoken",
+								"value": "accesstoken_eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImJic3Nra3R0NzdAZ21haWwuY29tIiwiaWQiOiI2NWNhZjdkNTQzZTY3NDUwNGExNzlkZjkiLCJsb2dnZWRJbiI6dHJ1ZSwiaWF0IjoxNzA4Njg5MDI0LCJleHAiOjE3MDg3NzU0MjR9.mISC-F0mipuaHjUS2egIi7iknHZ-W1NVfdB4MvLavyY",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3000/product/65d8935e56ac32adaf2be2d9",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"product",
+								"65d8935e56ac32adaf2be2d9"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update product",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "accesstoken",
+								"value": "accesstoken_eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImtoYWxlZGFsaTdnQGdtYWlsLmNvbSIsImlkIjoiNjViODg5NDFmOWNiMjdhYzRkMDQ4MWUzIiwibG9nZ2VkSW4iOnRydWUsImlhdCI6MTcwODY5NzczOCwiZXhwIjoxNzA4Nzg0MTM4fQ.D7kHY4p8H-Z_VE2dHj8C2vIRWY3S75PtafXc438cYCQ",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "title",
+									"value": "test 5",
+									"type": "text"
+								},
+								{
+									"key": "image",
+									"type": "file",
+									"src": "/C:/Users/ACER/Pictures/png-clipart-three-fruit-shakes-apple-juice-smoothie-milkshake-drink-fresh-juice-glass-strawberries-thumbnail.jpg"
+								},
+								{
+									"key": "oldPublicId",
+									"value": "E-Commerce/Categories/1agga/subCategory/4s41s/brand/g24df/Products/4422/ntqecfi9htu5ijgtfpvu",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:3000/product/updateProduct/65d8a838f1f36a3756294170",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"product",
+								"updateProduct",
+								"65d8a838f1f36a3756294170"
 							]
 						}
 					},

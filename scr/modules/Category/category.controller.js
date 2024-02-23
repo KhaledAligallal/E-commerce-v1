@@ -1,6 +1,6 @@
 import slugify from "slugify";
 import Category from "../../../DB/models/category.model.js";
-import generateUniqueString from '../../Utlis/generate-uniqueStrin.js'
+import generateUniqueString from '../../Utlis/generate-uniqueString.js'
 import cloudinaryConnection from '../../Utlis/cloudinary.js'
 import subCategory from "../../../DB/models/sub-category.model.js";
 import Brand from "../../../DB/models/brand.model.js";
@@ -32,7 +32,7 @@ export const addCategory = async (req, res, next) => {
     })
     console.log(`${process.env.MAIN_FOLDER}/Categories/${folder_Id}`);
     req.folder = `${process.env.MAIN_FOLDER}/Categories/${folder_Id}`
-    
+
 
 
 
@@ -47,10 +47,10 @@ export const addCategory = async (req, res, next) => {
 
     const newCategory = await Category.create(category)
 
-    req.savedDocument = { model:Category , _id: newCategory._id }
+    req.savedDocument = { model: Category, _id: newCategory._id }
     const x = 9
     x = 4
-  
+
     res.status(201).json({ success: true, message: 'Category created successfully', data: newCategory })
 
 }
@@ -111,12 +111,18 @@ export const updatedCategory = async (req, res, next) => {
 export const getAllCategories = async (req, res, next) => {
 
     const categories = await Category.find().populate([{
-        path: 'subategories'
-
+        path: 'subCategories',
+        populate: ([{
+            path: 'Brands',
+            populate: ([{
+                path: 'products'
+            }])
+        }])
     }])
     res.status(200).json({ success: true, message: 'Categories fetched successfully', data: categories })
 
 }
+
 
 
 export const deleteCategory = async (req, res, next) => {

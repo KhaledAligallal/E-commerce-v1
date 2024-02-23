@@ -21,7 +21,7 @@ const productSchema = new Schema(
         addedBy: { type: Schema.Types.ObjectId, ref: 'User', required: true },
         updateBy: { type: Schema.Types.ObjectId, ref: 'User' },
         brandId: { type: Schema.Types.ObjectId, ref: 'Brand', required: true },
-        subCategoryId: { type: Schema.Types.ObjectId, ref: 'SubCategory', required: true },
+        subCategoryId: { type: Schema.Types.ObjectId, ref: 'subCategory', required: true },
         categoryId: { type: Schema.Types.ObjectId, ref: 'Category', required: true },
 
         // arrays

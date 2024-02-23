@@ -2,7 +2,7 @@ import subCategory from "../../../DB/models/sub-category.model.js";
 import Category from "../../../DB/models/category.model.js";
 import slugify from "slugify";
 import cloudinaryConnection from "../../Utlis/cloudinary.js";
-import generateUniqueString from "../../Utlis/generate-uniqueStrin.js";
+import generateUniqueString from "../../Utlis/generate-uniqueString.js";
 import Brand from "../../../DB/models/brand.model.js";
 
 export const addSubCategory = async (req, res, next) => {

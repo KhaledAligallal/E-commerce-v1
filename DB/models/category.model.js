@@ -19,12 +19,14 @@ const categorySchema = new Schema({
     toObject: { virtuals: true }
 })
 
+categorySchema.virtual('subCategories', {
+    ref: 'subCategory',
+    localField: '_id',
+    foreignField: 'categoryId'
+});
 
-categorySchema.virtual('subategories',{
-ref: 'subCategory',
-localField:'_id',
-foreignField: 'categoryId'
- }) 
+
+
 
 const Category = model('Category', categorySchema)
 export default Category

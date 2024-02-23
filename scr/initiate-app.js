@@ -19,6 +19,7 @@ export const initiateApp = (app,express)=>{
     app.use('/subcategory',routers.supCategoryRouter)
     app.use('/brand',routers.brandRouter)
     app.use('/product',routers.productRouter)
+    app.use('/cart',routers.cartRouter)
     
     
     app.use(globalResponse,rollbackUploadedFiles,rollbackSavedDocuments)
