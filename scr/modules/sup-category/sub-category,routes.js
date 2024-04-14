@@ -22,8 +22,8 @@ router.delete('/:subCategoryId',auth(endPointsRoles.DELETE_CATEGORY),
 expressAsyncHandler(subcategoryController.deleteSubCategory))
 
 router.get('/',expressAsyncHandler(subcategoryController.getAllSubCategories))
-
-
+router.get('/specificCategoty/:categoryId',expressAsyncHandler(subcategoryController.getAllSubCategoriesForSpecificCategory))
+router.get('/findById/:subCategoryId',expressAsyncHandler(subcategoryController.getSubCategoryById))
 
 
 

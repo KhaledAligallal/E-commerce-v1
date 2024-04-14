@@ -23,7 +23,8 @@ router.delete('/:brandId',auth(endPointsRoles.ADD_BRAND),
 expressAsyncHandler(brandController.deleteBrand))
 
 router.get('/',expressAsyncHandler(brandController.getAllBrands))
-
+router.get('/specificSubCategory/:subCategoryId',expressAsyncHandler(brandController.getAllBrandForSpecificSubCategory))
+router.get('/specificCategory/:categoryId',expressAsyncHandler(brandController.getAllBrandForSpecificCategory))
 
 
 export default router

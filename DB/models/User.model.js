@@ -32,7 +32,7 @@ const userschema = new mongoose.Schema({
   }],
   role: {
     type: String,
-    enum: [systemRoles.USER, systemRoles.ADMIN,systemRoles.SUPER_ADMIN],
+    enum: Object.values(systemRoles),
     default: systemRoles.USER
   },
   isEmailVerified: {
@@ -47,7 +47,11 @@ const userschema = new mongoose.Schema({
   isLoggedIn: {
     type: Boolean,
     default: false
-  }
+  },
+  passwordResetOtp: { type: String },
+
+  isAccountDeleted: { type: Boolean, default: false},
+
 },
   {
     timestamps: true, toJSON: { virtuals: true }

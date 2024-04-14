@@ -3,8 +3,10 @@ export const globalResponse = (err, req, res, next) => {
         res.status(err['cause'] || 500).json({
             message: 'Catch error',
             error_msg: err.message,
-            errorlocation: err.stack
+            errorlocation: err.stack,
+            
         })
+       console.log(errorlocation);
         next()
     }
 

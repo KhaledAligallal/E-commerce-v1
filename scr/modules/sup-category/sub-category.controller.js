@@ -44,7 +44,7 @@ export const addSubCategory = async (req, res, next) => {
         addedBy: _id,
         categoryId
     }
-    
+
     const newSubCategory = await subCategory.create(SubCategory)
     res.status(201).json({ success: true, message: 'Category created successfully', data: newSubCategory })
 
@@ -84,16 +84,16 @@ export const updatedSubCategory = async (req, res, next) => {
         if (!req.file) return next({ cause: 400, message: 'Image is required' })
 
         const newPulicId = oldPublicId.split(`${isSubCategoryExists.folder_Id}/`)[1]
-      
+
 
         const { secure_url } = await cloudinaryConnection().uploader.upload(req.file.path, {
-            folder:`${process.env.MAIN_FOLDER}/Categories/${isSubCategoryExists.categoryId.folder_Id}/subCategory/${isSubCategoryExists.folder_Id}`,
-        
+            folder: `${process.env.MAIN_FOLDER}/Categories/${isSubCategoryExists.categoryId.folder_Id}/subCategory/${isSubCategoryExists.folder_Id}`,
+
             public_id: newPulicId
         })
-       
+
         isSubCategoryExists.image.secure_url = secure_url
-   
+
     }
 
 
@@ -133,9 +133,25 @@ export const getAllSubCategories = async (req, res, next) => {
     }])
     res.status(200).json({ success: true, message: 'subCategories fetched successfully', data: allSubCategories })
 
+}
+
+export const getAllSubCategoriesForSpecificCategory = async (req, res, next) => {
+
+    const { categoryId } = req.params
 
 
+    const getAll = await subCategory.find({ categoryId })
+    if (!getAll) return next({ cause: 404, message: 'Category not found' })
 
+    res.status(200).json({ success: true, message: 'Categories fetched successfully', data: getAll })
 
+}
 
+export const getSubCategoryById = async (req, res, next) => {
+const {subCategoryId} = req.params
+
+const SubCategory = await subCategory.findById(subCategoryId)
+if (!SubCategory) return next({ cause: 404, message: 'subCategory not found' })
+
+res.status(200).json({ success: true, message: 'subCategories fetched successfully', data: SubCategory })
 }

@@ -132,7 +132,34 @@ export const getAllBrands = async (req, res, next) => {
         path: 'products'
 
     }])
+    if (!brands.length) return next({ cause: 404, message: 'brand fetched Filed' })
+    
     res.status(200).json({ success: true, message: 'brand fetched successfully', data: brands })
+
+}
+
+export const getAllBrandForSpecificSubCategory = async (req, res, next) => {
+
+    const { subCategoryId } = req.params
+
+
+    const getAll = await Brand.find({ subCategoryId })
+    if (!getAll.length) return next({ cause: 404, message: 'brand fetched Filed' })
+
+    res.status(200).json({ success: true, message: 'brand fetched successfully', data: getAll })
+
+}
+
+
+export const getAllBrandForSpecificCategory = async (req, res, next) => {
+
+    const { categoryId } = req.params
+
+
+    const getAll = await Brand.find( {categoryId })
+    if (!getAll.length) return next({ cause: 404, message: 'brand fetched Filed' })
+
+    res.status(200).json({ success: true, message: 'brand fetched successfully', data: getAll })
 
 }
 
