@@ -51,6 +51,7 @@ const userschema = new mongoose.Schema({
   passwordResetOtp: { type: String },
 
   isAccountDeleted: { type: Boolean, default: false},
+  token:{ type: String},
 
 },
   {

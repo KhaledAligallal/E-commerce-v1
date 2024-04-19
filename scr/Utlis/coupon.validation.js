@@ -24,7 +24,8 @@ export async function applyCouponValidation(couponCode, userId){
     if(!isUserAssgined) return { msg: 'this coupon is not assgined to you' , status:400}
 
     // maxUsage Check
-    if(isUserAssgined.maxUsage <= isUserAssgined.usageCount)  return { msg: 'you have exceed the usage count for this coupon' , status:400}
+    if(isUserAssgined.maxUsage <= isUserAssgined.usageCount)  
+    return { msg: 'you have exceed the usage count for this coupon' , status:400}
 
 
     return coupon;

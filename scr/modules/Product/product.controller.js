@@ -118,8 +118,6 @@ export const updateProduct = async (req, res, next) => {
 
     res.status(200).json({ success: true, message: 'Product updated successfully', data: product })
 }
-
-
 //================================================= getAllProductsWithPagination product API =================================================//
 export const getAllProductsWithPagination = async (req, res, next) => {
 
@@ -168,10 +166,6 @@ export const allProductsForSpecificBrands = async (req, res, next) => {
     res.status(200).json({ success: true, data: products })
 
 } 
-
-
-
-
 //================================================= getSpecificProduct product API =============================================//
 
 export const getSpecificProduct = async (req, res, next) => {

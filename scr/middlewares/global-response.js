@@ -6,7 +6,7 @@ export const globalResponse = (err, req, res, next) => {
             errorlocation: err.stack,
             
         })
-       console.log(errorlocation);
+    console.log(err);
         next()
     }
 

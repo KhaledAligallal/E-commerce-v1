@@ -4,6 +4,7 @@ import slugify from "slugify";
 import cloudinaryConnection from "../../Utlis/cloudinary.js";
 import generateUniqueString from "../../Utlis/generate-uniqueString.js";
 import Brand from "../../../DB/models/brand.model.js";
+import { APIFeatures } from "../../Utlis/api-features.js";
 
 export const addSubCategory = async (req, res, next) => {
 
@@ -25,6 +26,7 @@ export const addSubCategory = async (req, res, next) => {
     }
 
     const slug = slugify(name, '-')
+
 
     // 4- upload image to cloudinary
 
@@ -126,8 +128,14 @@ export const deleteSubCategory = async (req, res, next) => {
 
 export const getAllSubCategories = async (req, res, next) => {
 
+    const { page, size, sort, ...search } = req.query
+    const features = new APIFeatures(req.query, subCategory.find())
+        .pagination({ page, size })
+        .sort(sort)
+        .search(search)
 
-    const allSubCategories = await subCategory.find().populate([{
+
+    const allSubCategories = await features.mongooseQuery.populate([{
         path: 'Brands'
 
     }])
@@ -148,10 +156,10 @@ export const getAllSubCategoriesForSpecificCategory = async (req, res, next) => 
 }
 
 export const getSubCategoryById = async (req, res, next) => {
-const {subCategoryId} = req.params
+    const { subCategoryId } = req.params
 
-const SubCategory = await subCategory.findById(subCategoryId)
-if (!SubCategory) return next({ cause: 404, message: 'subCategory not found' })
+    const SubCategory = await subCategory.findById(subCategoryId)
+    if (!SubCategory) return next({ cause: 404, message: 'subCategory not found' })
 
-res.status(200).json({ success: true, message: 'subCategories fetched successfully', data: SubCategory })
+    res.status(200).json({ success: true, message: 'subCategories fetched successfully', data: SubCategory })
 }

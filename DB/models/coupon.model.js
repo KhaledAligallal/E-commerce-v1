@@ -11,7 +11,7 @@ const couponSchema = new mongoose.Schema({
     couponAmount: {
         type: Number,
         required: true,
-        min:1
+        min: 1
     },
     couponStatus: {
         type: String,
@@ -26,25 +26,42 @@ const couponSchema = new mongoose.Schema({
         type: Boolean,
         default: false
     },
-    fromDate:{
+    fromDate: {
         type: String,
         required: true
     },
-    toDate:{
+    toDate: {
         type: String,
         required: true
     },
-    addedBy:{
+    addedBy: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "User",
         required: true
     },
-    updatedBy:{
+    updatedBy: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "User"
-    }
-},{timestamps: true});
+    },
+    isEnabled: {
+        type: Boolean,
+        default: true
+    },
+    disabledAt: { type: Date },
+
+    enabledAt: { type: Date },
+
+    disabledBy: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User"
+    },
+    enabledBy: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User"
+    },
+
+}, { timestamps: true });
 
 
 
-export default mongoose.models.Coupon ||mongoose.model('Coupon', couponSchema);
+export default mongoose.models.Coupon || mongoose.model('Coupon', couponSchema);

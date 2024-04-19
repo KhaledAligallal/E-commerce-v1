@@ -38,7 +38,8 @@ export class APIFeatures {
         if (search.priceFrom && !search.priceTo) queryFiler.appliedPrice = { $gte: search.priceFrom }
         if (search.priceTo && !search.priceFrom) queryFiler.appliedPrice = { $lte: search.priceTo }
         if (search.priceTo && search.priceFrom) queryFiler.appliedPrice = { $gte: search.priceFrom, $lte: search.priceTo }
-
+        if (search.name) queryFiler.name = { $regex: search.name, $options: 'i' }
+        
         this.mongooseQuery = this.mongooseQuery.find(queryFiler)
         return this
     }

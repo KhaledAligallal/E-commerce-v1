@@ -12,8 +12,6 @@ export const updateAccount = async (req, res, next) => {
     const {
         username,
         email,
-        password,
-        oldPassword,
         age,
         phoneNumbers,
         addresses } = req.body
@@ -21,16 +19,10 @@ export const updateAccount = async (req, res, next) => {
     // check email 
     const isEmailexists = await User.findOne({ email })
     if (isEmailexists) return next({ cause: 400, message: "email is already exists" })
-    //old password check
-    const isOldPassword = bcrypt.compareSync(oldPassword, req.authUser.password)
-    if (!isOldPassword) return next({ cause: 400, message: "old password is incorrect" })
-    //hash password
-    const hashPassword = bcrypt.hashSync(password, +process.env.SALT_ROUNDS)
     // update user profile
     const updateProfile = await User.findByIdAndUpdate({ _id }, {
         username,
         email,
-        password: hashPassword,
         age,
         phoneNumbers,
         addresses
@@ -38,6 +30,34 @@ export const updateAccount = async (req, res, next) => {
     res.status(200).json({ success: true, message: 'User Profile updated successfully', data: updateProfile })
 
 }
+
+
+//hash password
+
+export const updatePassword = async (req, res, next) => {
+    // Get data from request
+    const { password} = req.body;
+    // Check if the user is logged in
+    const { _id, password: hashedPassword } = req.authUser;
+    
+    // Verify the old password
+  
+    // Hash the new password
+    const hashPass = bcrypt.hashSync(password, +process.env.SALT_ROUNDS);
+    
+    // Update the password
+    const updatedUser = await User.findByIdAndUpdate({ _id }, { password: hashPass }, { new: true });
+
+    // Check if the password update was successful
+    if (!updatedUser) {
+        return res.status(400).json({ message: 'Failed to update password' });
+    }
+    
+    // Password updated successfully
+    return res.status(200).json({ message: 'Password updated successfully', data: updatedUser });
+}
+
+
 
 export const deleteAccount = async (req, res, next) => {
 
@@ -59,7 +79,7 @@ export const SoftDeleteAccount = async (req, res, next) => {
     const { _id } = req.authUser
 
     // delete user 
-    const deleteUser = await User.findByIdAndUpdate({ _id },{isAccountDeleted:true})
+    const deleteUser = await User.findByIdAndUpdate({ _id }, { isAccountDeleted: true })
 
     if (!deleteUser) { return res.status(400).json({ message: 'deleted failed' }) }
     res.status(200).json({ message: 'deleted successfully' })
@@ -71,7 +91,7 @@ export const SoftDeleteAccount = async (req, res, next) => {
 export const getProfileData = async (req, res, next) => {
     //check user must be logged in
     const { _id } = req.authUser
-//get profile data by id
+    //get profile data by id
     const ProfileData = await User.findById(_id)
     if (!ProfileData) { return res.status(400).json({ message: 'not found' }) }
     res.status(200).json({ message: 'done', ProfileData })
@@ -93,7 +113,7 @@ export const ForgetPassword = async (req, res, next) => {
     const isEmailSent = await sendEmailService({
 
         to: email,
-        subject: 'account protection',       
+        subject: 'account protection',
         message: `<h1>To be safe, to reset the password for this account,
          you will need to confirm your identity by entering the following single-use code </h1>
         <b style="font-size: 50px ; text-align: center">code is  ${otp}  </b>`
@@ -114,7 +134,7 @@ export const ResetPassword = async (req, res, next) => {
     const { sentOtp, newPassword } = req.body
 
     // Find user by email
-    const user = await User.findOne({ passwordResetOtp:sentOtp })
+    const user = await User.findOne({ passwordResetOtp: sentOtp })
 
     if (!user) {
         next(new Error('userOTP is not found', { cause: 404 }))

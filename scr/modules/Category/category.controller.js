@@ -4,7 +4,7 @@ import generateUniqueString from '../../Utlis/generate-uniqueString.js'
 import cloudinaryConnection from '../../Utlis/cloudinary.js'
 import subCategory from "../../../DB/models/sub-category.model.js";
 import Brand from "../../../DB/models/brand.model.js";
-
+import { APIFeatures } from "../../Utlis/api-features.js";
 
 export const addCategory = async (req, res, next) => {
 
@@ -48,14 +48,11 @@ export const addCategory = async (req, res, next) => {
     const newCategory = await Category.create(category)
 
     req.savedDocument = { model: Category, _id: newCategory._id }
-    const x = 9
-    x = 4
+  
 
     res.status(201).json({ success: true, message: 'Category created successfully', data: newCategory })
 
 }
-
-
 export const updatedCategory = async (req, res, next) => {
 
     // 1- data from destructuring the request body 
@@ -106,11 +103,16 @@ export const updatedCategory = async (req, res, next) => {
     await category.save()
     res.status(200).json({ success: true, message: 'Category updated successfully', data: category })
 }
-
-
 export const getAllCategories = async (req, res, next) => {
 
-    const categories = await Category.find().populate([{
+    const { page, size, sort, ...search } = req.query
+    const features = new APIFeatures(req.query, Category.find())
+        .pagination({ page, size })
+        .sort( sort )
+        .search(search)
+
+        
+    const categories = await features.mongooseQuery.populate([{
         path: 'subCategories',
         populate: ([{
             path: 'Brands',
@@ -122,9 +124,6 @@ export const getAllCategories = async (req, res, next) => {
     res.status(200).json({ success: true, message: 'Categories fetched successfully', data: categories })
 
 }
-
-
-
 export const deleteCategory = async (req, res, next) => {
 
     const { categoryId } = req.params
@@ -151,13 +150,10 @@ export const deleteCategory = async (req, res, next) => {
 
 
 }
-
-
-
 export const getCategoryById = async (req, res, next) => {
     const {categoryId} = req.params
     
     const category = await Category.findById(categoryId)
     if (!category) return next({ cause: 404, message: 'Category not found' })
     res.status(200).json({ success: true, message: 'Category fetched successfully', data: category })
-    }
+}

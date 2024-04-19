@@ -5,6 +5,7 @@ import subCategory from "../../../DB/models/sub-category.model.js";
 import cloudinaryConnection from "../../Utlis/cloudinary.js";
 import generateUniqueString from "../../Utlis/generate-uniqueString.js";
 import Product from "../../../DB/models/product.model.js";
+import { APIFeatures } from "../../Utlis/api-features.js";
 
 
 
@@ -127,8 +128,15 @@ export const deleteBrand = async (req, res, next) => {
 
 }
 export const getAllBrands = async (req, res, next) => {
+    
+    const { page, size, sort, ...search } = req.query
+    const features = new APIFeatures(req.query, Brand.find())
+        .pagination({ page, size })
+        .sort( sort )
+        .search(search)
 
-    const brands = await Brand.find().populate([{
+        
+    const brands = await features.mongooseQuery.populate([{
         path: 'products'
 
     }])
@@ -141,8 +149,6 @@ export const getAllBrands = async (req, res, next) => {
 export const getAllBrandForSpecificSubCategory = async (req, res, next) => {
 
     const { subCategoryId } = req.params
-
-
     const getAll = await Brand.find({ subCategoryId })
     if (!getAll.length) return next({ cause: 404, message: 'brand fetched Filed' })
 

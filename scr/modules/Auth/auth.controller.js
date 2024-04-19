@@ -108,6 +108,7 @@ export const signIn = async (req, res, next) => {
     const token = jwt.sign({ email, id: user._id, loggedIn: true }, process.env.JWT_SECRET_LOGIN, { expiresIn: '1d' })
     // updated isLoggedIn = true  in database
     user.isLoggedIn = true
+    user.token = token
 
     await user.save()
 
@@ -117,7 +118,8 @@ export const signIn = async (req, res, next) => {
         data: {
             token
         },
-        loggedIn: user.isLoggedIn
+      //  loggedIn: user.isLoggedIn,
+        user
     })
 }
 
