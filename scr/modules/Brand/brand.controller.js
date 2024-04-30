@@ -9,31 +9,39 @@ import { APIFeatures } from "../../Utlis/api-features.js";
 
 
 
-
-
+// Controller function to add a new brand
 export const addBrand = async (req, res, next) => {
-    const { name } = req.body
-    const { _id } = req.authUser
-    const { categoryId, subCategoryId } = req.query
+    // Extracting required data from the request object
+    const { name } = req.body; // Brand name
+    const { _id } = req.authUser; // ID of the authenticated user
+    const { categoryId, subCategoryId } = req.query; // IDs of the category and subcategory
 
-    const subCategoryCheck = await subCategory.findById(subCategoryId).populate('categoryId', 'folder_Id')
-    if (!subCategoryCheck) return next({ message: 'subcategory is note found', cause: 404 })
+    // Checking if the subcategory exists and retrieving its details
+    const subCategoryCheck = await subCategory.findById(subCategoryId).populate('categoryId', 'folder_Id');
+    if (!subCategoryCheck) return next({ message: 'subcategory is not found', cause: 404 });
 
-    const isBrandExist = await Brand.findOne({ name, subCategoryId })
-    if (isBrandExist) return next({ message: 'brand is alrady exists from this subCategory', cause: 404 })
+    // Checking if the brand already exists for this subcategory
+    const isBrandExist = await Brand.findOne({ name, subCategoryId });
+    if (isBrandExist) return next({ message: 'brand already exists for this subcategory', cause: 404 });
 
-    if (categoryId != subCategoryCheck.categoryId._id) return next({ message: 'category is not found', cause: 404 })
+    // Checking if the specified category matches the category of the subcategory
+    if (categoryId != subCategoryCheck.categoryId._id) return next({ message: 'category is not found', cause: 404 });
 
-    const slug = slugify(name, '-')
+    // Creating a slug for the brand name
+    const slug = slugify(name, '-');
 
-    if (!req.file) return next({ message: 'please uplode brand logo', cause: 404 })
+    // Checking if a file is uploaded (brand logo)
+    if (!req.file) return next({ message: 'please upload brand logo', cause: 404 });
 
-    const folder_Id = generateUniqueString(5)
+    // Generating a unique folder ID for the brand
+    const folder_Id = generateUniqueString(5);
 
+    // Uploading the brand logo to Cloudinary
     const { secure_url, public_id } = await cloudinaryConnection().uploader.upload(req.file.path, {
         folder: `${process.env.MAIN_FOLDER}/Categories/${subCategoryCheck.categoryId.folder_Id}/subCategory/${subCategoryCheck.folder_Id}/brand/${folder_Id}`
-    })
+    });
 
+    // Creating a new brand object
     const subCategoryObject = {
         name,
         slug,
@@ -42,15 +50,18 @@ export const addBrand = async (req, res, next) => {
         addedBy: _id,
         subCategoryId,
         categoryId
-    }
+    };
 
-    const newBrand = await Brand.create(subCategoryObject)
+    // Saving the new brand to the database
+    const newBrand = await Brand.create(subCategoryObject);
+
+    // Sending a success response
     res.status(201).json({
         status: 'success',
-        message: 'brand addedd successfuly',
+        message: 'brand added successfully',
         data: newBrand
-    })
-}
+    });
+};
 
 export const updateBrand = async (req, res, next) => {
 
@@ -106,70 +117,80 @@ export const updateBrand = async (req, res, next) => {
     await brand.save()
     res.status(200).json({ success: true, message: 'Brand updated successfully', data: brand })
 }
-
+// Controller function to delete a brand
 export const deleteBrand = async (req, res, next) => {
+    // Extracting the brandId from request parameters
+    const { brandId } = req.params;
 
-    const { brandId } = req.params
+    // Finding and deleting the brand by its ID
+    const brand = await Brand.findByIdAndDelete(brandId).populate('categoryId subCategoryId');
 
-    const brand = await Brand.findByIdAndDelete(brandId).populate('categoryId subCategoryId')
+    // If brand is not found, return a 404 error
+    if (!brand) return next({ cause: 404, message: 'brand not found' });
 
-    if (!brand) return next({ cause: 404, message: 'brand not found' })
+    // Deleting related products of the brand
+    const product = await Product.deleteMany({ brandId });
 
-    const product = await Product.deleteMany({ brandId })
-
+    // If no products are found related to the brand, log a message
     if (product.deletedCount < 0) {
         console.log('there is no related product');
     }
 
-    await cloudinaryConnection().api.delete_resources_by_prefix(`${process.env.MAIN_FOLDER}/Categories/${brand.categoryId.folder_Id}/subCategory/${brand.subCategoryId.folder_Id}/brand${brand.folder_Id}`)
-    await cloudinaryConnection().api.delete_folder(`${process.env.MAIN_FOLDER}/Categories/${brand.categoryId.folder_Id}/subCategory/${brand.subCategoryId.folder_Id}/brand${brand.folder_Id}`)
+    // Deleting brand images from Cloudinary
+    await cloudinaryConnection().api.delete_resources_by_prefix(`${process.env.MAIN_FOLDER}/Categories/${brand.categoryId.folder_Id}/subCategory/${brand.subCategoryId.folder_Id}/brand${brand.folder_Id}`);
+    await cloudinaryConnection().api.delete_folder(`${process.env.MAIN_FOLDER}/Categories/${brand.categoryId.folder_Id}/subCategory/${brand.subCategoryId.folder_Id}/brand${brand.folder_Id}`);
 
-    res.status(200).json({ success: true, message: 'brand deleted successfully' })
+    // Sending a success response
+    res.status(200).json({ success: true, message: 'brand deleted successfully' });
+};
 
-}
+// Controller function to get all brands with pagination, sorting, and search options
 export const getAllBrands = async (req, res, next) => {
-    
-    const { page, size, sort, ...search } = req.query
+    // Extracting pagination, sorting, and search parameters from the request query
+    const { page, size, sort, ...search } = req.query;
+
+    // Creating an instance of APIFeatures with the Brand model and request query
     const features = new APIFeatures(req.query, Brand.find())
         .pagination({ page, size })
-        .sort( sort )
-        .search(search)
+        .sort(sort)
+        .search(search);
 
-        
-    const brands = await features.mongooseQuery.populate([{
-        path: 'products'
+    // Executing the query and populating related products
+    const brands = await features.mongooseQuery.populate([{ path: 'products' }]);
 
-    }])
-    if (!brands.length) return next({ cause: 404, message: 'brand fetched Filed' })
-    
-    res.status(200).json({ success: true, message: 'brand fetched successfully', data: brands })
+    // If no brands are found, return a 404 error
+    if (!brands.length) return next({ cause: 404, message: 'brand fetched failed' });
 
-}
+    // Sending a success response with fetched brands
+    res.status(200).json({ success: true, message: 'brand fetched successfully', data: brands });
+};
 
+// Controller function to get all brands for a specific subcategory
 export const getAllBrandForSpecificSubCategory = async (req, res, next) => {
+    // Extracting subCategoryId from request parameters
+    const { subCategoryId } = req.params;
 
-    const { subCategoryId } = req.params
-    const getAll = await Brand.find({ subCategoryId })
-    if (!getAll.length) return next({ cause: 404, message: 'brand fetched Filed' })
+    // Finding all brands for the specified subcategory
+    const getAll = await Brand.find({ subCategoryId });
 
-    res.status(200).json({ success: true, message: 'brand fetched successfully', data: getAll })
+    // If no brands are found, return a 404 error
+    if (!getAll.length) return next({ cause: 404, message: 'brand fetched failed' });
 
-}
+    // Sending a success response with fetched brands
+    res.status(200).json({ success: true, message: 'brand fetched successfully', data: getAll });
+};
 
-
+// Controller function to get all brands for a specific category
 export const getAllBrandForSpecificCategory = async (req, res, next) => {
+    // Extracting categoryId from request parameters
+    const { categoryId } = req.params;
 
-    const { categoryId } = req.params
+    // Finding all brands for the specified category
+    const getAll = await Brand.find({ categoryId });
 
+    // If no brands are found, return a 404 error
+    if (!getAll.length) return next({ cause: 404, message: 'brand fetched failed' });
 
-    const getAll = await Brand.find( {categoryId })
-    if (!getAll.length) return next({ cause: 404, message: 'brand fetched Filed' })
-
-    res.status(200).json({ success: true, message: 'brand fetched successfully', data: getAll })
-
-}
-
-
-
-
-
+    // Sending a success response with fetched brands
+    res.status(200).json({ success: true, message: 'brand fetched successfully', data: getAll });
+};

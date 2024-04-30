@@ -5,39 +5,33 @@ import cloudinaryConnection from "../../Utlis/cloudinary.js";
 import generateUniqueString from "../../Utlis/generate-uniqueString.js";
 import Brand from "../../../DB/models/brand.model.js";
 import { APIFeatures } from "../../Utlis/api-features.js";
-
 export const addSubCategory = async (req, res, next) => {
+    // Destructuring request body and parameters
+    const { name } = req.body;
+    const { _id } = req.authUser;
+    const { categoryId } = req.params;
 
-    // 1- destructuring the request body
-
-    const { name } = req.body
-    const { _id } = req.authUser
-    const { categoryId } = req.params
-    // 2- check if the subcategory name is already exist
-    const isNameDuplicate = await subCategory.findOne({ name })
+    // Check if subcategory name already exists
+    const isNameDuplicate = await subCategory.findOne({ name });
     if (isNameDuplicate) {
-        return next(new Error('name is alrady exists,Please try another name', { cause: 409 }))
+        return next(new Error('Name already exists. Please try another name', { cause: 409 }));
     }
-    // 3- generate the slug
-    const category = await Category.findById(categoryId)
 
+    // Generate slug
+    const category = await Category.findById(categoryId);
     if (!category) {
-        return next(new Error('name is not exists,Please try another name', { cause: 409 }))
+        return next(new Error('Category not found. Please try another name', { cause: 409 }));
     }
+    const slug = slugify(name, '-');
 
-    const slug = slugify(name, '-')
-
-
-    // 4- upload image to cloudinary
-
-    if (!req.file) return next({ cause: 400, message: 'Image is required' })
-
-    const folder_Id = generateUniqueString(5)
+    // Upload image to Cloudinary
+    if (!req.file) return next({ cause: 400, message: 'Image is required' });
+    const folder_Id = generateUniqueString(5);
     const { secure_url, public_id } = await cloudinaryConnection().uploader.upload(req.file.path, {
         folder: `${process.env.MAIN_FOLDER}/Categories/${category.folder_Id}/subCategory/${folder_Id}`
-    })
+    });
 
-
+    // Create subcategory object
     const SubCategory = {
         name,
         slug,
@@ -45,121 +39,112 @@ export const addSubCategory = async (req, res, next) => {
         folder_Id,
         addedBy: _id,
         categoryId
-    }
+    };
 
-    const newSubCategory = await subCategory.create(SubCategory)
-    res.status(201).json({ success: true, message: 'Category created successfully', data: newSubCategory })
-
-}
+    // Create new subcategory in the database
+    const newSubCategory = await subCategory.create(SubCategory);
+    res.status(201).json({ success: true, message: 'Subcategory created successfully', data: newSubCategory });
+};
 
 export const updatedSubCategory = async (req, res, next) => {
+    // Destructuring request body, parameters, and auth user
+    const { name, oldPublicId } = req.body;
+    const { _id } = req.authUser;
+    const { subCategoryId } = req.params;
 
-    // 1- data from destructuring the request body 
-    const { name, oldPublicId } = req.body
-    //2 check autherization
-    const { _id } = req.authUser
-    const { subCategoryId } = req.params
-    //check is categoryId is exists
-    const isSubCategoryExists = await subCategory.findById(subCategoryId).populate('categoryId')
-    if (!isSubCategoryExists) return next({ cause: 404, message: 'Category not found' })
+    // Check if subcategory exists
+    const isSubCategoryExists = await subCategory.findById(subCategoryId).populate('categoryId');
+    if (!isSubCategoryExists) return next({ cause: 404, message: 'Subcategory not found' });
 
+    // Update subcategory name and slug
     if (name) {
-        // check if the new category name different from the old name
-        if (name == isSubCategoryExists.name) {
-            return next({ cause: 400, message: 'Please enter different category name from the existing one.' })
+        if (name === isSubCategoryExists.name) {
+            return next({ cause: 400, message: 'Please enter a different category name from the existing one' });
         }
-
-        //  check if the new category name is already exist
-        const isNameDuplicated = await subCategory.findOne({ name })
+        const isNameDuplicated = await subCategory.findOne({ name });
         if (isNameDuplicated) {
-            return next({ cause: 409, message: 'Category name is already exist' })
+            return next({ cause: 409, message: 'Category name already exists' });
         }
-
-        //  update the category name and the category slug
-        isSubCategoryExists.name = name
-        isSubCategoryExists.slug = slugify(name, '-')
+        isSubCategoryExists.name = name;
+        isSubCategoryExists.slug = slugify(name, '-');
     }
 
-
-    //  check if the user want to update the image
+    // Check if the user wants to update the image
     if (oldPublicId) {
-        if (!req.file) return next({ cause: 400, message: 'Image is required' })
-
-        const newPulicId = oldPublicId.split(`${isSubCategoryExists.folder_Id}/`)[1]
-
-
+        if (!req.file) return next({ cause: 400, message: 'Image is required' });
+        const newPulicId = oldPublicId.split(`${isSubCategoryExists.folder_Id}/`)[1];
         const { secure_url } = await cloudinaryConnection().uploader.upload(req.file.path, {
             folder: `${process.env.MAIN_FOLDER}/Categories/${isSubCategoryExists.categoryId.folder_Id}/subCategory/${isSubCategoryExists.folder_Id}`,
-
             public_id: newPulicId
-        })
-
-        isSubCategoryExists.image.secure_url = secure_url
-
+        });
+        isSubCategoryExists.image.secure_url = secure_url;
     }
 
-
-    //  set value for the updatedBy field
-    isSubCategoryExists.updatedBy = _id
-
-    await isSubCategoryExists.save()
-    res.status(200).json({ success: true, message: 'Category updated successfully', data: isSubCategoryExists })
-}
+    // Update updatedBy field and save changes
+    isSubCategoryExists.updatedBy = _id;
+    await isSubCategoryExists.save();
+    res.status(200).json({ success: true, message: 'Subcategory updated successfully', data: isSubCategoryExists });
+};
 
 export const deleteSubCategory = async (req, res, next) => {
+    // Get subcategory ID from parameters
+    const { subCategoryId } = req.params;
 
-    const { subCategoryId } = req.params
+    // Find and delete subcategory by ID
+    const isSubCategoryExists = await subCategory.findByIdAndDelete(subCategoryId).populate('categoryId');
+    if (!isSubCategoryExists) return next({ cause: 404, message: 'Subcategory not found' });
 
-    const isSubCategoryExists = await subCategory.findByIdAndDelete(subCategoryId).populate('categoryId')
-
-    if (!isSubCategoryExists) return next({ cause: 404, message: 'subCategory not found' })
-
-    const brand = await Brand.deleteMany({ subCategoryId })
+    // Delete related brands and Cloudinary images
+    const brand = await Brand.deleteMany({ subCategoryId });
     if (brand.deletedCount < 0) {
-        console.log('there is no related category');
+        console.log('There are no related categories');
     }
+    await cloudinaryConnection().api.delete_resources_by_prefix(`${process.env.MAIN_FOLDER}/Categories/${isSubCategoryExists.categoryId.folder_Id}/subCategory/${isSubCategoryExists.folder_Id}`);
+    await cloudinaryConnection().api.delete_folder(`${process.env.MAIN_FOLDER}/Categories/${isSubCategoryExists.categoryId.folder_Id}/subCategory/${isSubCategoryExists.folder_Id}`);
 
-    await cloudinaryConnection().api.delete_resources_by_prefix(`${process.env.MAIN_FOLDER}/Categories/${isSubCategoryExists.categoryId.folder_Id}/subCategory/${isSubCategoryExists.folder_Id}`)
-    await cloudinaryConnection().api.delete_folder(`${process.env.MAIN_FOLDER}/Categories/${isSubCategoryExists.categoryId.folder_Id}/subCategory/${isSubCategoryExists.folder_Id}`)
-
-    res.status(200).json({ success: true, message: 'subCategory deleted successfully' })
-
-}
-
+    res.status(200).json({ success: true, message: 'Subcategory deleted successfully' });
+};
 export const getAllSubCategories = async (req, res, next) => {
+    // Extract query parameters for pagination, sorting, and searching
+    const { page, size, sort, ...search } = req.query;
 
-    const { page, size, sort, ...search } = req.query
+    // Use APIFeatures class to handle pagination, sorting, and searching
     const features = new APIFeatures(req.query, subCategory.find())
-        .pagination({ page, size })
-        .sort(sort)
-        .search(search)
+        .pagination({ page, size })  // Pagination
+        .sort(sort)  // Sorting
+        .search(search);  // Searching
 
-
-    const allSubCategories = await features.mongooseQuery.populate([{
-        path: 'Brands'
-
-    }])
-    res.status(200).json({ success: true, message: 'subCategories fetched successfully', data: allSubCategories })
-
+    // Execute the MongoDB query and populate the 'Brands' field
+    const allSubCategories = await features.mongooseQuery.populate([{ path: 'Brands' }]);
+    
+    // Send the response with the fetched subcategories
+    res.status(200).json({ success: true, message: 'Subcategories fetched successfully', data: allSubCategories });
 }
 
 export const getAllSubCategoriesForSpecificCategory = async (req, res, next) => {
+    // Extract the categoryId from the request parameters
+    const { categoryId } = req.params;
 
-    const { categoryId } = req.params
+    // Find all subcategories belonging to the specific category
+    const getAll = await subCategory.find({ categoryId });
 
+    // If no subcategories are found, return an error response
+    if (!getAll) return next({ cause: 404, message: 'Category not found' });
 
-    const getAll = await subCategory.find({ categoryId })
-    if (!getAll) return next({ cause: 404, message: 'Category not found' })
-
-    res.status(200).json({ success: true, message: 'Categories fetched successfully', data: getAll })
-
+    // Send the response with the fetched subcategories
+    res.status(200).json({ success: true, message: 'Categories fetched successfully', data: getAll });
 }
 
 export const getSubCategoryById = async (req, res, next) => {
-    const { subCategoryId } = req.params
+    // Extract the subCategoryId from the request parameters
+    const { subCategoryId } = req.params;
 
-    const SubCategory = await subCategory.findById(subCategoryId)
-    if (!SubCategory) return next({ cause: 404, message: 'subCategory not found' })
+    // Find the subcategory by its ID
+    const SubCategory = await subCategory.findById(subCategoryId);
 
-    res.status(200).json({ success: true, message: 'subCategories fetched successfully', data: SubCategory })
+    // If the subcategory is not found, return an error response
+    if (!SubCategory) return next({ cause: 404, message: 'Subcategory not found' });
+
+    // Send the response with the fetched subcategory
+    res.status(200).json({ success: true, message: 'Subcategory fetched successfully', data: SubCategory });
 }

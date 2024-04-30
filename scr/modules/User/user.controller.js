@@ -6,42 +6,33 @@ import { generateOTP } from '../../Utlis/generate-otp.js'
 import sendEmailService from '../services/send-email.services.js'
 //=============================== Update Profile User ==============================//
 export const updateAccount = async (req, res, next) => {
+    // Destructure the required data from the request body
+    const { _id } = req.authUser;
+    const { username, email, age, phoneNumbers, addresses } = req.body;
 
-    // * destructuring the required data from the request body
-    const { _id } = req.authUser
-    const {
-        username,
-        email,
-        age,
-        phoneNumbers,
-        addresses } = req.body
+    // Check if the email already exists
+    const isEmailExists = await User.findOne({ email });
+    if (isEmailExists) return next({ cause: 400, message: "Email already exists" });
 
-    // check email 
-    const isEmailexists = await User.findOne({ email })
-    if (isEmailexists) return next({ cause: 400, message: "email is already exists" })
-    // update user profile
+    // Update user profile
     const updateProfile = await User.findByIdAndUpdate({ _id }, {
         username,
         email,
         age,
         phoneNumbers,
         addresses
-    })
-    res.status(200).json({ success: true, message: 'User Profile updated successfully', data: updateProfile })
+    });
 
+    // Send response with updated profile data
+    res.status(200).json({ success: true, message: 'User Profile updated successfully', data: updateProfile });
 }
-
-
-//hash password
 
 export const updatePassword = async (req, res, next) => {
     // Get data from request
-    const { password} = req.body;
+    const { password } = req.body;
     // Check if the user is logged in
     const { _id, password: hashedPassword } = req.authUser;
     
-    // Verify the old password
-  
     // Hash the new password
     const hashPass = bcrypt.hashSync(password, +process.env.SALT_ROUNDS);
     
@@ -57,94 +48,101 @@ export const updatePassword = async (req, res, next) => {
     return res.status(200).json({ message: 'Password updated successfully', data: updatedUser });
 }
 
-
-
 export const deleteAccount = async (req, res, next) => {
+    // Check user must be logged in
+    const { _id } = req.authUser;
 
-    //check user must be logged in
-    const { _id } = req.authUser
+    // Delete user 
+    const deleteUser = await User.findByIdAndDelete({ _id });
 
-    // delete user 
-    const deleteUser = await User.findByIdAndDelete({ _id })
-
-    if (!deleteUser) { return res.status(400).json({ message: 'deleted failed' }) }
-    res.status(200).json({ message: 'deleted successfully' })
-
+    // Check if user was deleted successfully
+    if (!deleteUser) { 
+        return res.status(400).json({ message: 'Deletion failed' }); 
+    }
+    
+    // Send success message
+    res.status(200).json({ message: 'Deleted successfully' });
 }
-
 
 export const SoftDeleteAccount = async (req, res, next) => {
+    // Check user must be logged in
+    const { _id } = req.authUser;
 
-    //check user must be logged in
-    const { _id } = req.authUser
+    // Soft delete user 
+    const softDeleteUser = await User.findByIdAndUpdate({ _id }, { isAccountDeleted: true });
 
-    // delete user 
-    const deleteUser = await User.findByIdAndUpdate({ _id }, { isAccountDeleted: true })
-
-    if (!deleteUser) { return res.status(400).json({ message: 'deleted failed' }) }
-    res.status(200).json({ message: 'deleted successfully' })
-
-}
-
-
-
-export const getProfileData = async (req, res, next) => {
-    //check user must be logged in
-    const { _id } = req.authUser
-    //get profile data by id
-    const ProfileData = await User.findById(_id)
-    if (!ProfileData) { return res.status(400).json({ message: 'not found' }) }
-    res.status(200).json({ message: 'done', ProfileData })
-
-
-}
-export const ForgetPassword = async (req, res, next) => {
-
-    // get data from request
-    const { email } = req.body
-    // check  mobileNumber
-    const user = await User.findOne({ email })
-    if (!user) return next(new Error('Sorry, but there is no account registered with this email ', { cause: 409 }))
-
-    const otp = generateOTP()
-    const Token = Jwt.sign({ email }, ' ForgetPasswordSecretCode', { expiresIn: '7d' })
-
-
-    const isEmailSent = await sendEmailService({
-
-        to: email,
-        subject: 'account protection',
-        message: `<h1>To be safe, to reset the password for this account,
-         you will need to confirm your identity by entering the following single-use code </h1>
-        <b style="font-size: 50px ; text-align: center">code is  ${otp}  </b>`
-
-    })
-    if (!isEmailSent) {
-        return next(new Error('Email is not sent, please try again later', { cause: 500 }))
+    // Check if user was soft deleted successfully
+    if (!softDeleteUser) { 
+        return res.status(400).json({ message: 'Deletion failed' }); 
     }
+    
+    // Send success message
+    res.status(200).json({ message: 'Deleted successfully' });
+}
+export const getProfileData = async (req, res, next) => {
+    // Check if user is logged in
+    const { _id } = req.authUser;
+    // Get profile data by user ID
+    const ProfileData = await User.findById(_id);
+    if (!ProfileData) { 
+        return res.status(400).json({ message: 'Profile data not found' }); 
+    }
+    // Send profile data in response
+    res.status(200).json({ message: 'Profile data retrieved successfully', ProfileData });
+}
+
+export const ForgetPassword = async (req, res, next) => {
+    // Get data from request
+    const { email } = req.body;
+    // Check if user exists with the provided email
+    const user = await User.findOne({ email });
+    if (!user) return next(new Error('Sorry, but there is no account registered with this email', { cause: 409 }));
+
+    // Generate OTP
+    const otp = generateOTP();
+    // Generate JWT token
+    const Token = Jwt.sign({ email }, 'ForgetPasswordSecretCode', { expiresIn: '7d' });
+
+    // Send email with OTP
+    const isEmailSent = await sendEmailService({
+        to: email,
+        subject: 'Account Protection',
+        message: `<h1>To reset your password, please enter the following single-use code:</h1>
+        <b style="font-size: 50px; text-align: center">Code: ${otp}</b>`
+    });
+
+    // Check if email sending failed
+    if (!isEmailSent) {
+        return next(new Error('Email is not sent, please try again later', { cause: 500 }));
+    }
+
     // Update user's OTP field
-    user.passwordResetOtp = otp
-    await user.save()
-    //  console.log(otp);
-    return res.status(200).json({ message: 'please check your email to chenge your password' })
+    user.passwordResetOtp = otp;
+    await user.save();
+
+    return res.status(200).json({ message: 'Please check your email to change your password' });
 }
 
 export const ResetPassword = async (req, res, next) => {
+    // Get data from request
+    const { sentOtp, newPassword } = req.body;
 
-    const { sentOtp, newPassword } = req.body
+    // Find user by OTP
+    const user = await User.findOne({ passwordResetOtp: sentOtp });
 
-    // Find user by email
-    const user = await User.findOne({ passwordResetOtp: sentOtp })
-
+    // Check if user with OTP exists
     if (!user) {
-        next(new Error('userOTP is not found', { cause: 404 }))
+        next(new Error('Invalid OTP', { cause: 404 }));
     }
-    // hash new password
-    const hashedPassword = bcrypt.hashSync(newPassword, 9)
-    // Update user's password
+
+    // Hash the new password
+    const hashedPassword = bcrypt.hashSync(newPassword, 9);
+
+    // Update user's password and clear OTP
     user.password = hashedPassword;
     user.passwordResetOtp = null;
     await user.save();
 
+    // Send success response
     res.status(200).json({ message: "Password updated successfully" });
 }

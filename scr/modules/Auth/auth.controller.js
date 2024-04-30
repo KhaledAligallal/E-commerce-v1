@@ -15,7 +15,6 @@ import sendEmailService from '../services/send-email.services.js'
  * create new document in the database
  * return the response
  */
-//================================================== SIGNUP API =============================//
 export const signUp = async (req, res, next) => {
     // 1- destructure the required data from the request body 
     const {
@@ -118,7 +117,7 @@ export const signIn = async (req, res, next) => {
         data: {
             token
         },
-      //  loggedIn: user.isLoggedIn,
+      
         user
     })
 }

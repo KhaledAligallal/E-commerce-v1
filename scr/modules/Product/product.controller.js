@@ -7,7 +7,7 @@ import { systemRoles } from "../../Utlis/system-roles.js";
 import { APIFeatures } from "../../Utlis/api-features.js";
 
 export const addproduct = async (req, res, next) => {
-    // data
+    //get data from body
     const { title, desc, stock, basePrice, discount, specs } = req.body
     const { brandId, categoryId, subCategoryId } = req.query
     const addedBy = req.authUser._id
